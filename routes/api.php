@@ -30,7 +30,7 @@ Route::controller(AuthController::class)->group(function () {
 });
 
 // private routes
-Route::controller(AuthController::class)->middleware('api')->group(function () {
+Route::controller(AuthController::class)->middleware('auth:sanctum')->group(function () {
     Route::post('/logout', 'logout');
 });
 
