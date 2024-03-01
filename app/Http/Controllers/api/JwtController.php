@@ -27,15 +27,20 @@ class JwtController extends Controller
     {
         // validate the request data
         $data = $request->validate([
-            'name' => 'required|min:2|string',
+            'fname' => 'required|min:2|string',
+            'lname' => 'required',
+            'role' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|string|confirmed|min:4'
         ]);
 
+        // dd($data);
         // try creating the user
         try {
             $user = User::create([
-                'name' => $data['name'],
+                'fname' => $data['fname'],
+                'lname' => $data['lname'],
+                'role' => $data['role'],
                 'email' => $data['email'],
                 'password' => bcrypt($data['password'])
             ]);
