@@ -68,9 +68,9 @@ class JwtController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'login credentials incorrect'], 401);
         }
-
+        Auth::user()->setRememberToken($token);
         return $this->respondWithToken($token); # If all credentials are correct - we are going to generate a new access token and send it back on response
     }
 
@@ -109,6 +109,17 @@ class JwtController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
+    /**
+     * update user info
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(Request $request)
+    {
+        $user = auth()->user();
+        if ($user->getRememberToken())
+            return $user;
+    }
     /**
      * Get the token array structure.
      *

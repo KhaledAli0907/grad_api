@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\JwtController;
+use App\Http\Controllers\api\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
@@ -44,3 +45,10 @@ Route::controller(JwtController::class)
         Route::post('register', 'register');
     });
 
+// products routes
+Route::controller(ProductsController::class)
+    ->middleware('api')
+    ->group(function ($router) {
+        Route::get('products', 'getAll');
+        Route::post('products', 'store');
+    });
